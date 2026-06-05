@@ -3,6 +3,8 @@ package com.letsplay.demo.user;
 import org.springframework.stereotype.Service;
 
 import com.letsplay.demo.auth.RegisterRequest;
+import com.letsplay.demo.exception.BadRequestException;
+import com.letsplay.demo.exception.NotFoundException;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,7 @@ public class UserService {
 
     public User createUser(RegisterRequest req) {
         if (userRepository.findByEmail(req.email()).isPresent()) {
-            // throw new Exception("Email already exists"); // Bad request
+            throw new BadRequestException("Email already exists");
         }
 
         User user = new User();
@@ -34,7 +36,7 @@ public class UserService {
 
     public User getUserById(String id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     public void deleteUser(String id) {

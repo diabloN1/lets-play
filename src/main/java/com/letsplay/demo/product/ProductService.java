@@ -1,6 +1,9 @@
 package com.letsplay.demo.product;
 
 import org.springframework.stereotype.Service;
+
+import com.letsplay.demo.exception.NotFoundException;
+
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +24,7 @@ public class ProductService {
 
     public Product getProductById(String id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new NotFoundException("Product not found"));
     }
 
     public List<Product> getProductsByUser(String userId) {
