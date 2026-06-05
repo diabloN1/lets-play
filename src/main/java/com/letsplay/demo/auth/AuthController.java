@@ -1,0 +1,27 @@
+package com.letsplay.demo.auth;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import com.letsplay.demo.auth.DTOs.AuthResponse;
+import com.letsplay.demo.auth.DTOs.LoginRequest;
+import com.letsplay.demo.auth.DTOs.RegisterRequest;
+
+@RestController
+@RequestMapping("/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/register")
+    public AuthResponse register(@Valid @RequestBody RegisterRequest request) {
+        return authService.register(request);
+    }
+
+    @PostMapping("/login")
+    public AuthResponse login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request);
+    }
+}
