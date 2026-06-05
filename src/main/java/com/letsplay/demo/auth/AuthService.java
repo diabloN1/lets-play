@@ -7,7 +7,6 @@ import com.letsplay.demo.auth.DTOs.LoginRequest;
 import com.letsplay.demo.auth.DTOs.RegisterRequest;
 import com.letsplay.demo.config.jwt.JwtService;
 import com.letsplay.demo.exception.BadRequestException;
-import com.letsplay.demo.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,6 @@ public class AuthService {
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
-
-        user.setRole(Role.USER);
 
         userRepository.save(user);
 
