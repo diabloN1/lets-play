@@ -1,6 +1,11 @@
 package com.letsplay.demo.user;
 
 import org.springframework.web.bind.annotation.*;
+
+import com.letsplay.demo.auth.RegisterRequest;
+
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -14,8 +19,8 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public User createUser(@Valid @RequestBody RegisterRequest req) {
+        return userService.createUser(req);
     }
 
     @GetMapping
