@@ -8,9 +8,11 @@ public record RegisterRequest(
     String name,
 
     @Email
+    @NotBlank
     String email,
 
     @Size(min = 8)
+    @NotBlank
     String password
 
 ) {}
