@@ -2,7 +2,7 @@ package com.letsplay.demo.user;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.letsplay.demo.auth.RegisterRequest;
+import com.letsplay.demo.user.DTO.AddUser;
 
 import jakarta.validation.Valid;
 
@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@Valid @RequestBody RegisterRequest req) {
+    public User createUser(@Valid @RequestBody AddUser req) {
         return userService.createUser(req);
     }
 

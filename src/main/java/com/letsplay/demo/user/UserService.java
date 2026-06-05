@@ -2,9 +2,9 @@ package com.letsplay.demo.user;
 
 import org.springframework.stereotype.Service;
 
-import com.letsplay.demo.auth.RegisterRequest;
 import com.letsplay.demo.exception.BadRequestException;
 import com.letsplay.demo.exception.NotFoundException;
+import com.letsplay.demo.user.DTO.AddUser;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
-    public User createUser(RegisterRequest req) {
+    public User createUser(AddUser req) {
         if (userRepository.findByEmail(req.email()).isPresent()) {
             throw new BadRequestException("Email already exists");
         }
@@ -27,6 +27,7 @@ public class UserService {
         user.setName(req.name());
         user.setEmail(req.email());
         user.setPassword(encoder.encode(req.password()));
+        user.setRole(req.role());
         return userRepository.save(user);
     }
 
