@@ -7,6 +7,8 @@ import com.letsplay.demo.auth.DTOs.LoginRequest;
 import com.letsplay.demo.auth.DTOs.RegisterRequest;
 import com.letsplay.demo.config.jwt.JwtService;
 import com.letsplay.demo.exception.BadRequestException;
+import com.letsplay.demo.exception.UnauthorizedException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,10 +42,10 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UnauthorizedException("Invalid credentials"));
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new BadRequestException("Invalid credentials");
+            throw new UnauthorizedException("Invalid credentials");
         }
 
         String token = jwtService.generateToken(user.getEmail());
