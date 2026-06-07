@@ -1,6 +1,12 @@
 package com.letsplay.demo.product;
 
 import org.springframework.web.bind.annotation.*;
+
+import com.letsplay.demo.product.DTOs.CreateProductRequest;
+import com.letsplay.demo.product.DTOs.UpdateProductRequest;
+
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -14,8 +20,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public Product createProduct(@Valid @RequestBody CreateProductRequest req) {
+        return productService.createProduct(req);
     }
 
     @GetMapping
@@ -29,8 +35,8 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable String id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest req) {
+        return productService.updateProduct(id, req);
     }
 
     @DeleteMapping("/{id}")

@@ -1,7 +1,7 @@
 ## TODO
 [ ] - register when email dulicated show 403 forbiden with no body
 [ ] - login fix method when unvalid credentials
-
+[ ] - add patch
 
 # README
 - Before lunch 

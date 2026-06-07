@@ -7,11 +7,11 @@ import jakarta.validation.constraints.Size;
 public record CreateProductRequest(
 
     @NotBlank
-    @Size(max = 100)
+    @Size(min = 3, max = 100)
     String name,
 
     @NotBlank
-    @Size(max = 1000)
+    @Size(min = 3, max = 1000)
     String description,
 
     @DecimalMin(value = "0.0", inclusive = false)
