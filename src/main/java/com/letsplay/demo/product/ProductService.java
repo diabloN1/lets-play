@@ -1,5 +1,6 @@
 package com.letsplay.demo.product;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.letsplay.demo.exception.NotFoundException;
@@ -21,6 +22,13 @@ public class ProductService {
         product.setName(req.name());
         product.setDescription(req.description());
         product.setPrice(req.price());
+
+        String uuid = (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        product.setUserId(uuid);
         return productRepository.save(product);
     }
 
