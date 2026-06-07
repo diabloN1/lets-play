@@ -66,4 +66,16 @@ public class GlobalExceptionHandler {
                                                                 ? ex.getMostSpecificCause().getMessage()
                                                                 : ex.getMessage()));
         }
+
+        // Catch All
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<?> handleGenericException(Exception ex) {
+
+                System.out.println("Error 500: " + ex.getMessage());
+                
+                return ResponseEntity
+                                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body(Map.of(
+                                                "error", "Internal Server Error"));
+        }
 }
