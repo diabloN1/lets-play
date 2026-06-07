@@ -36,8 +36,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
-        if (jwtService.isValid(token)) {
-
+        try {
             String uuid = jwtService.extractUUID(token);
             String role = jwtService.extractRole(token);
 
@@ -50,6 +49,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     authorities);
 
             SecurityContextHolder.getContext().setAuthentication(authToken);
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
         }
 
         filterChain.doFilter(request, response);

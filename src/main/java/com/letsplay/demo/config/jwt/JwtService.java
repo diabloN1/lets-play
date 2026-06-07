@@ -47,13 +47,4 @@ public class JwtService {
                 .getPayload()
                 .get("role", String.class);
     }
-
-    public boolean isValid(String token) {
-        try {
-            extractUUID(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }
