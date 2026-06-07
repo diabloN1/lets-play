@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -67,12 +68,21 @@ public class GlobalExceptionHandler {
                                                                 : ex.getMessage()));
         }
 
+        @ExceptionHandler(NoResourceFoundException.class)
+        public ResponseEntity<?> handleInvalidRoute(NoResourceFoundException ex) {
+
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
+                                .body(Map.of(
+                                                "error", ex.getMessage()));
+        }
+
         // Catch All
         @ExceptionHandler(Exception.class)
         public ResponseEntity<?> handleGenericException(Exception ex) {
 
                 System.out.println("Error 500: " + ex.getMessage());
-                
+
                 return ResponseEntity
                                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                                 .body(Map.of(

@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/products", "/products/"})
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
