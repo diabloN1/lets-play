@@ -5,6 +5,8 @@ import io.jsonwebtoken.security.Keys;
 
 import org.springframework.stereotype.Service;
 
+import com.letsplay.demo.user.User;
+
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -18,16 +20,17 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(String email) {
+    public String generateToken(User user) {
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getId())
+                .claim("role", user.getRole().name())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 3 * 1000 * 60 * 60)) // 3 hour
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSigningKey())
                 .compact();
     }
 
-    public String extractEmail(String token) {
+    public String extractUUID(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
@@ -36,9 +39,18 @@ public class JwtService {
                 .getSubject();
     }
 
+    public String extractRole(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("role", String.class);
+    }
+
     public boolean isValid(String token) {
         try {
-            extractEmail(token);
+            extractUUID(token);
             return true;
         } catch (Exception e) {
             return false;
