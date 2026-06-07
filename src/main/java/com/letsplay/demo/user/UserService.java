@@ -2,7 +2,7 @@ package com.letsplay.demo.user;
 
 import org.springframework.stereotype.Service;
 
-import com.letsplay.demo.exception.BadRequestException;
+import com.letsplay.demo.exception.ConflictException;
 import com.letsplay.demo.exception.NotFoundException;
 import com.letsplay.demo.user.DTO.AddUser;
 
@@ -20,7 +20,7 @@ public class UserService {
 
     public User createUser(AddUser req) {
         if (userRepository.findByEmail(req.email()).isPresent()) {
-            throw new BadRequestException("Email already exists");
+            throw new ConflictException("Email already exists");
         }
 
         User user = new User();

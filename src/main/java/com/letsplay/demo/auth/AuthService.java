@@ -6,7 +6,7 @@ import com.letsplay.demo.auth.DTOs.AuthResponse;
 import com.letsplay.demo.auth.DTOs.LoginRequest;
 import com.letsplay.demo.auth.DTOs.RegisterRequest;
 import com.letsplay.demo.config.jwt.JwtService;
-import com.letsplay.demo.exception.BadRequestException;
+import com.letsplay.demo.exception.ConflictException;
 import com.letsplay.demo.exception.UnauthorizedException;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.findByEmail(request.email()).isPresent()) {
-            throw new BadRequestException("Email already exists");
+            throw new ConflictException("Email already exists");
         }
 
         User user = new User();

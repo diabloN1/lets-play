@@ -77,6 +77,14 @@ public class GlobalExceptionHandler {
                                                 "error", ex.getMessage()));
         }
 
+        @ExceptionHandler(ConflictException.class)
+        public ResponseEntity<?> handleConflict(ConflictException ex) {
+                return ResponseEntity
+                                .status(HttpStatus.CONFLICT)
+                                .body(Map.of(
+                                                "error", ex.getMessage()));
+        }
+
         // Catch All
         @ExceptionHandler(Exception.class)
         public ResponseEntity<?> handleGenericException(Exception ex) {
