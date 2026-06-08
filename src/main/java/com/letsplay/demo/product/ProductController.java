@@ -1,5 +1,6 @@
 package com.letsplay.demo.product;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.letsplay.demo.product.DTOs.CreateProductRequest;
@@ -20,6 +21,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Product createProduct(@Valid @RequestBody CreateProductRequest req) {
         return productService.createProduct(req);
     }
@@ -40,6 +42,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable String id) {
         productService.deleteProduct(id);
     }
