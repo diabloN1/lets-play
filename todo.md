@@ -16,7 +16,7 @@
 
 
 ## Remaining
-    [ ] - Implement https
+    [X] - Implement https
 
 401 → missing/invalid/expired JWT
 403 → authenticated user lacks required role or isn't the product owner
