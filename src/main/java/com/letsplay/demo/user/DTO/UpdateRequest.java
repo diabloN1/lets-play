@@ -4,7 +4,7 @@ import com.letsplay.demo.user.Role;
 
 import jakarta.validation.constraints.*;
 
-public record EditUserRequest(
+public record UpdateRequest(
 
     @NotBlank
     @Size(min = 3, max = 25)
