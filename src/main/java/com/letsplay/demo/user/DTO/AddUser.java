@@ -7,6 +7,7 @@ import jakarta.validation.constraints.*;
 public record AddUser(
 
     @NotBlank
+    @Size(min = 3, max = 25)
     String name,
 
     @Email
@@ -16,9 +17,8 @@ public record AddUser(
     @NotNull
     Role role,
 
-
-    @Size(min = 8)
     @NotBlank
+    @Size(min = 8, max = 30)
     String password
 
 ) {}
