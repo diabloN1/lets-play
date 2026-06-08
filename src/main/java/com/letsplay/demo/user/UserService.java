@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.letsplay.demo.exception.ConflictException;
 import com.letsplay.demo.exception.NotFoundException;
 import com.letsplay.demo.user.DTO.AddUser;
+import com.letsplay.demo.user.DTO.UserResponse;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +32,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserResponse::from)
+                .toList();
     }
 
-    public User getUserById(String id) {
-        return userRepository.findById(id)
+    public UserResponse getUserById(String id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
+        return UserResponse.from(user);
     }
 
     public void deleteUser(String id) {

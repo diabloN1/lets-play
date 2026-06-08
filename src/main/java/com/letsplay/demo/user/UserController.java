@@ -3,6 +3,7 @@ package com.letsplay.demo.user;
 import org.springframework.web.bind.annotation.*;
 
 import com.letsplay.demo.user.DTO.AddUser;
+import com.letsplay.demo.user.DTO.UserResponse;
 
 import jakarta.validation.Valid;
 
@@ -24,12 +25,12 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable String id) {
+    public UserResponse getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }
 
