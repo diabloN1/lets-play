@@ -23,9 +23,7 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
 
     public UserResponse createUser(CreateRequest req) {
-        if (userRepository.findByEmail(req.email()).isPresent()) {
-            throw new ConflictException("Email already exists");
-        }
+        validEmail(req.email());
 
         User user = new User();
         user.setName(req.name());
@@ -43,19 +41,13 @@ public class UserService {
     }
 
     public UserResponse getUserById(String id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found"));
-        return UserResponse.from(user);
+        return UserResponse.from(retreiveUser(id));
     }
 
     public UserResponse updateUserById(String id, UpdateRequest req) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        User user = retreiveUser(id);
 
-        if (userRepository.findByEmail(req.email()).isPresent()) {
-            throw new ConflictException("Email already exists");
-        }
-
+        validEmail(req.email());
         user.setName(req.name());
         user.setEmail(req.email());
         user.setRole(req.role());
@@ -63,18 +55,17 @@ public class UserService {
     }
 
     public void editUserById(String id, EditRequest req) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        User user = retreiveUser(id);
 
-        if (validName(user, req.name()))
+        if (validName(req.name()))
             user.setName(req.name());
-        if (validEmail(user, req.email()))
+        if (validEmail(req.email()))
             user.setEmail(req.email());
         if (req.role() != null)
             user.setRole(req.role());
         if (req.password() != null)
             user.setPassword(encoder.encode(req.password()));
-        
+
         userRepository.save(user);
     }
 
@@ -82,7 +73,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    private boolean validName(User user, String name) {
+    // Private    
+    private User retreiveUser(String id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
+    private boolean validName(String name) {
         if (name == null)
             return false;
 
@@ -92,7 +89,7 @@ public class UserService {
         return true;
     }
 
-    private boolean validEmail(User user, String email) {
+    private boolean validEmail(String email) {
         if (email == null)
             return false;
 
