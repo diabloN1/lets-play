@@ -39,6 +39,13 @@ public class SecurityConfig {
                     res.getWriter().write("""
                                 {"error":"Token expired or invalid"}
                             """);
+                })
+                .accessDeniedHandler((req, res, accessDeniedEx) -> {
+                    res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    res.setContentType("application/json");
+                    res.getWriter().write("""
+                                {"error":"You do not have permission to access this resource"}
+                            """);
                 }));
         return http.build();
     }
