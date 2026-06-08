@@ -2,10 +2,12 @@ package com.letsplay.demo.user;
 
 import org.springframework.stereotype.Service;
 
+import com.letsplay.demo.exception.BadRequestException;
 import com.letsplay.demo.exception.ConflictException;
 import com.letsplay.demo.exception.NotFoundException;
-import com.letsplay.demo.user.DTO.AddUserRequest;
-import com.letsplay.demo.user.DTO.EditUserRequest;
+import com.letsplay.demo.user.DTO.CreateRequest;
+import com.letsplay.demo.user.DTO.EditRequest;
+import com.letsplay.demo.user.DTO.UpdateRequest;
 import com.letsplay.demo.user.DTO.UserResponse;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
-    public UserResponse createUser(AddUserRequest req) {
+    public UserResponse createUser(CreateRequest req) {
         if (userRepository.findByEmail(req.email()).isPresent()) {
             throw new ConflictException("Email already exists");
         }
@@ -46,17 +48,57 @@ public class UserService {
         return UserResponse.from(user);
     }
 
-    public UserResponse updateUserById(String id, EditUserRequest req) {
+    public UserResponse updateUserById(String id, UpdateRequest req) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-        
+
+        if (userRepository.findByEmail(req.email()).isPresent()) {
+            throw new ConflictException("Email already exists");
+        }
+
         user.setName(req.name());
         user.setEmail(req.email());
         user.setRole(req.role());
         return UserResponse.from(userRepository.save(user));
     }
 
+    public void editUserById(String id, EditRequest req) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        if (validName(user, req.name()))
+            user.setName(req.name());
+        if (validEmail(user, req.email()))
+            user.setEmail(req.email());
+        if (req.role() != null)
+            user.setRole(req.role());
+        if (req.password() != null)
+            user.setPassword(encoder.encode(req.password()));
+        
+        userRepository.save(user);
+    }
+
     public void deleteUser(String id) {
         userRepository.deleteById(id);
+    }
+
+    private boolean validName(User user, String name) {
+        if (name == null)
+            return false;
+
+        if (name.isBlank())
+            throw new BadRequestException("Name must not be Blank");
+
+        return true;
+    }
+
+    private boolean validEmail(User user, String email) {
+        if (email == null)
+            return false;
+
+        if (userRepository.findByEmail(email).isPresent())
+            throw new ConflictException("Email already exists");
+
+        return true;
     }
 }

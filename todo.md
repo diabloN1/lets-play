@@ -7,13 +7,16 @@
     [X] - Delete
 
 ### User
-    [-] - Create
-    [-] - Get All
-    [-] - Get 1
-    [-] - Put
-    [-] - Delete
+    [X] - Create
+    [X] - Get All
+    [X] - Get 1
+    [X] - Put
+    [X] - Delete
+    [X] - Patch
 
- [-] -> Need testing
+
+## Remaining
+    [ ] - Implement https
 
 401 → missing/invalid/expired JWT
 403 → authenticated user lacks required role or isn't the product owner

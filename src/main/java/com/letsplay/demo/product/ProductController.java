@@ -3,8 +3,8 @@ package com.letsplay.demo.product;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import com.letsplay.demo.product.DTOs.CreateProductRequest;
-import com.letsplay.demo.product.DTOs.UpdateProductRequest;
+import com.letsplay.demo.product.DTOs.CreateRequest;
+import com.letsplay.demo.product.DTOs.UpdateRequest;
 
 import jakarta.validation.Valid;
 
@@ -22,7 +22,7 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Product createProduct(@Valid @RequestBody CreateProductRequest req) {
+    public Product createProduct(@Valid @RequestBody CreateRequest req) {
         return productService.createProduct(req);
     }
 
@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest req) {
+    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateRequest req) {
         return productService.updateProduct(id, req);
     }
 

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.letsplay.demo.exception.ForbiddenException;
 import com.letsplay.demo.exception.NotFoundException;
-import com.letsplay.demo.product.DTOs.CreateProductRequest;
-import com.letsplay.demo.product.DTOs.UpdateProductRequest;
+import com.letsplay.demo.product.DTOs.CreateRequest;
+import com.letsplay.demo.product.DTOs.UpdateRequest;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Product createProduct(CreateProductRequest req) {
+    public Product createProduct(CreateRequest req) {
         Product product = new Product();
         product.setName(req.name());
         product.setDescription(req.description());
@@ -41,7 +41,7 @@ public class ProductService {
         return productRepository.findByUserId(userId);
     }
 
-    public Product updateProduct(String id, UpdateProductRequest updated) {
+    public Product updateProduct(String id, UpdateRequest updated) {
         Product product = getProductById(id);
 
         if (!isCurrentOwnerOrAdmin(product.getUserId())) {
