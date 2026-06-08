@@ -7,11 +7,13 @@
     [X] - Delete
 
 ### User
-    [ ] - Create
-    [ ] - Get All
-    [ ] - Get 1
-    [ ] - Put
-    [ ] - Delete
+    [-] - Create
+    [-] - Get All
+    [-] - Get 1
+    [-] - Put
+    [-] - Delete
+
+ [-] -> Need testing
 
 401 → missing/invalid/expired JWT
 403 → authenticated user lacks required role or isn't the product owner
