@@ -1,8 +1,10 @@
 package com.letsplay.demo.product;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.letsplay.demo.exception.ForbiddenException;
 import com.letsplay.demo.exception.NotFoundException;
 import com.letsplay.demo.product.DTOs.CreateProductRequest;
 import com.letsplay.demo.product.DTOs.UpdateProductRequest;
@@ -22,13 +24,7 @@ public class ProductService {
         product.setName(req.name());
         product.setDescription(req.description());
         product.setPrice(req.price());
-
-        String uuid = (String) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-
-        product.setUserId(uuid);
+        product.setUserId(getCurrentUUID());
         return productRepository.save(product);
     }
 
@@ -48,6 +44,10 @@ public class ProductService {
     public Product updateProduct(String id, UpdateProductRequest updated) {
         Product product = getProductById(id);
 
+        if (!isCurrentOwnerOrAdmin(product.getUserId())) {
+            throw new ForbiddenException("Sorry! You are not the owner of this product");
+        }
+
         product.setName(updated.name());
         product.setDescription(updated.description());
         product.setPrice(updated.price());
@@ -56,6 +56,34 @@ public class ProductService {
     }
 
     public void deleteProduct(String id) {
-        productRepository.deleteById(id);
+        Product product = getProductById(id);
+
+        if (!isCurrentOwnerOrAdmin(product.getUserId())) {
+            throw new ForbiddenException("Sorry! You are not the owner of this product");
+        }
+
+        productRepository.delete(product);
+    }
+
+    private boolean isCurrentOwnerOrAdmin(String userId) {
+        return userId.equals(getCurrentUUID()) || getCurrentRole().equals("ROLE_ADMIN");
+    }
+
+    private String getCurrentUUID() {
+        return (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+    }
+
+    private String getCurrentRole() {
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream()
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse(null);
     }
 }

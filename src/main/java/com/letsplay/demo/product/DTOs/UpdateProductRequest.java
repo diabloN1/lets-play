@@ -2,19 +2,21 @@ package com.letsplay.demo.product.DTOs;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UpdateProductRequest(
 
     @NotBlank
-    @Size(max = 100)
+    @Size(min = 3, max = 100)
     String name,
 
     @NotBlank
-    @Size(max = 1000)
+    @Size(min = 3, max = 1000)
     String description,
 
+    @NotNull
     @DecimalMin(value = "0.0", inclusive = false)
-    double price
+    Double price
 
 ) {}
