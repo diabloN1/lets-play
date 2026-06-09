@@ -6,8 +6,8 @@ import com.letsplay.demo.auth.DTOs.AuthResponse;
 import com.letsplay.demo.auth.DTOs.LoginRequest;
 import com.letsplay.demo.auth.DTOs.RegisterRequest;
 import com.letsplay.demo.config.jwt.JwtService;
-import com.letsplay.demo.exception.ConflictException;
-import com.letsplay.demo.exception.UnauthorizedException;
+import com.letsplay.demo.exception.custom.ConflictException;
+import com.letsplay.demo.exception.custom.UnauthorizedException;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

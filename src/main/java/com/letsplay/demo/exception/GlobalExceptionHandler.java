@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import com.letsplay.demo.exception.custom.BadRequestException;
+import com.letsplay.demo.exception.custom.ConflictException;
+import com.letsplay.demo.exception.custom.ForbiddenException;
+import com.letsplay.demo.exception.custom.NotFoundException;
+import com.letsplay.demo.exception.custom.UnauthorizedException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

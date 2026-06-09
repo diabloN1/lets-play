@@ -4,8 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.letsplay.demo.exception.ForbiddenException;
-import com.letsplay.demo.exception.NotFoundException;
+import com.letsplay.demo.exception.custom.ForbiddenException;
+import com.letsplay.demo.exception.custom.NotFoundException;
 import com.letsplay.demo.product.DTOs.CreateRequest;
 import com.letsplay.demo.product.DTOs.UpdateRequest;
 

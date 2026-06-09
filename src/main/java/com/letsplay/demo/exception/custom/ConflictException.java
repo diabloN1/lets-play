@@ -1,4 +1,4 @@
-package com.letsplay.demo.exception;
+package com.letsplay.demo.exception.custom;
 
 public class ConflictException extends RuntimeException {
     

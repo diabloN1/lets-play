@@ -2,9 +2,9 @@ package com.letsplay.demo.user;
 
 import org.springframework.stereotype.Service;
 
-import com.letsplay.demo.exception.BadRequestException;
-import com.letsplay.demo.exception.ConflictException;
-import com.letsplay.demo.exception.NotFoundException;
+import com.letsplay.demo.exception.custom.BadRequestException;
+import com.letsplay.demo.exception.custom.ConflictException;
+import com.letsplay.demo.exception.custom.NotFoundException;
 import com.letsplay.demo.user.DTO.CreateRequest;
 import com.letsplay.demo.user.DTO.EditRequest;
 import com.letsplay.demo.user.DTO.UpdateRequest;
