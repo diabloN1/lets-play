@@ -1,46 +1,51 @@
 package com.letsplay.demo.product;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.letsplay.demo.product.DTOs.CreateRequest;
 import com.letsplay.demo.product.DTOs.UpdateRequest;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    @PermitAll
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 
+    @PermitAll
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable String id) {
+        return productService.getProductById(id);
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Product createProduct(@Valid @RequestBody CreateRequest req) {
         return productService.createProduct(req);
     }
 
-    @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
-    }
-
-    @GetMapping("/{id}")
-    public Product getProductById(@PathVariable String id) {
-        return productService.getProductById(id);
-    }
-
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateRequest req) {
         return productService.updateProduct(id, req);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable String id) {

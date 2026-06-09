@@ -1,5 +1,6 @@
 package com.letsplay.demo.auth;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -17,12 +18,14 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @PermitAll
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public AuthResponse register(@Valid @RequestBody RegisterRequest request) {
         return authService.register(request);
     }
 
+    @PermitAll
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);

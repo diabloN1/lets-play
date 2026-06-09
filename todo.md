@@ -1,22 +1,10 @@
 ## TODO
-### Product
-    [X] - Create
-    [X] - Get All
-    [X] - Get 1
-    [X] - Put
-    [X] - Delete
-
-### User
-    [X] - Create
-    [X] - Get All
-    [X] - Get 1
-    [X] - Put
-    [X] - Delete
-    [X] - Patch
-
-
 ## Remaining
-    [X] - Implement https
+[X] - Are the annotations @EnableWebSecurity, @EnableMethodSecurity, @PermitAll, @PostAuthorize and @PreAuthorize used correctly?
+
+## Bonus
+[] - Check if CORS policies are set appropriately.
+[] - Check if rate limiting is implemented to prevent brute force attacks.
 
 401 → missing/invalid/expired JWT
 403 → authenticated user lacks required role or isn't the product owner
