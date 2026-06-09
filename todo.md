@@ -3,8 +3,8 @@
 [X] - Are the annotations @EnableWebSecurity, @EnableMethodSecurity, @PermitAll, @PostAuthorize and @PreAuthorize used correctly?
 
 ## Bonus
-[] - Check if CORS policies are set appropriately.
-[] - Check if rate limiting is implemented to prevent brute force attacks.
+[X] - Check if CORS policies are set appropriately.
+[X] - Check if rate limiting is implemented to prevent brute force attacks.
 
 401 → missing/invalid/expired JWT
 403 → authenticated user lacks required role or isn't the product owner
