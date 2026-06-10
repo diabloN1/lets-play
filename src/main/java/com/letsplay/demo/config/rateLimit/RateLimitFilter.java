@@ -29,7 +29,6 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
         var bucket = rateLimitService.resolveBucket(key);
 
-        System.out.println("waaaaaaaaa " + bucket.getAvailableTokens());
         if (!bucket.tryConsume(1)) {
 
             response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
