@@ -3,6 +3,7 @@ package com.letsplay.demo.config.jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.letsplay.demo.user.User;
@@ -14,7 +15,8 @@ import javax.crypto.SecretKey;
 @Service
 public class JwtService {
 
-    private String secret = "THIS_IS_A_VERY_LONG_SECRET_KEY_CHANGE_IT_123456789";
+    @Value("${jwt.secret}")
+    private String secret;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
